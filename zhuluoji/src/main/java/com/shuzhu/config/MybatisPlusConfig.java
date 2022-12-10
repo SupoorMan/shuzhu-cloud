@@ -1,6 +1,8 @@
-package com.shuzhu;
+package com.shuzhu.config;
 
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,16 +21,21 @@ import org.springframework.context.annotation.Configuration;
  * sql 性能规范,防止全表更新与删除
  */
 @Configuration
+@ConditionalOnClass(value = {MybatisPlusInterceptor.class})
 public class MybatisPlusConfig {
 
-    /**
-     * 分页插件注册
-     * @return 分页拦截器
-     */
     @Bean
-    public PaginationInnerInterceptor paginationInnerInterceptor() {
-        PaginationInnerInterceptor interceptor = new PaginationInnerInterceptor();
-        interceptor.setMaxLimit(500L);
+    public PaginationInnerInterceptor paginationInterceptor() {
+        PaginationInnerInterceptor paginationInterceptor = new PaginationInnerInterceptor();
+        //你的最大单页限制数量，默认 100 条，小于 0 如 -1 不受限制
+        paginationInterceptor.setMaxLimit(1000L);
+        return paginationInterceptor;
+    }
+
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        interceptor.addInnerInterceptor(paginationInterceptor());
         return interceptor;
     }
 
