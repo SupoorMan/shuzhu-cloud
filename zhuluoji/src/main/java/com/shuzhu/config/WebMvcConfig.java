@@ -1,14 +1,7 @@
 package com.shuzhu.config;
 
 import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.servlet.config.annotation.*;
 
 
 @SpringBootConfiguration
@@ -58,7 +51,17 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**").addResourceLocations("file:" + System.getProperty("user.dir") + "/");
+        registry.addResourceHandler("/**", "/swagger-ui/**")
+                .addResourceLocations("file:" + System.getProperty("user.dir") + "/",
+                        "classpath:/META-INF/resources/webjars/springfox-swagger-ui/",
+                        "doc.html")
+                .resourceChain(false);
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/swagger-ui/")
+                .setViewName("forward:/swagger-ui/index.html");
     }
 
 }

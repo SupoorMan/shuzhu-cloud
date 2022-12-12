@@ -10,8 +10,11 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ResultEnum {
-    SUCCESS(200, "success️"),
+    SUCCESS(200, "success"),
     ERROR(500, "error"),
+
+    FAIL(1001, "fail"),
+
 
     ;
 

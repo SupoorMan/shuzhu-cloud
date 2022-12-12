@@ -22,14 +22,20 @@ public class ResultUtil {
         return new Result(ResultEnum.SUCCESS.getCode(), msg, data);
     }
 
+    // fail
+    public static Result fail() {
+        return new Result(ResultEnum.FAIL, null);
+    }
+
+    public static Result fail(String msg) {
+        return new Result(ResultEnum.FAIL.getCode(), msg, null);
+    }
+
+
     // error
     public static Result error() {
         return new Result(ResultEnum.ERROR, null);
     }
-
-//    public static Result error(Object data) {
-//        return error(ResultEnum.ERROR, null);
-//    }
 
     public static Result error(String msg) {
         return error(ResultEnum.ERROR.getCode(), msg);

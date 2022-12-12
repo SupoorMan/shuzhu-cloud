@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author Poor
- * @since 2022-12-09
+ * @since 2022-12-12
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -68,6 +68,9 @@ public class AppletUser implements Serializable {
 
     @ApiModelProperty(value = "小红书账号")
     private String redbookId;
+
+    @ApiModelProperty(value = "状态: 0.禁用 1.可以 ")
+    private Integer state;
 
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;

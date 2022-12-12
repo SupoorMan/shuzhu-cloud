@@ -3,6 +3,7 @@ package com.shuzhu.config;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -19,16 +20,10 @@ import java.util.Set;
 
 
 @Configuration
-//@Profile({"dev", "local"})
+@Profile({"dev", "local"})
 @EnableOpenApi
-//@EnableSwaggerBootstrapUI
 public class SwaggerConfig {
 
-    /**
-     * 是否开启swagger配置，生产环境需关闭
-     */
-    /*    @Value("${swagger.enabled}")*/
-    private boolean enable;
 
     /**
      * 创建API
@@ -37,18 +32,20 @@ public class SwaggerConfig {
      */
     @Bean
     public Docket createRestApi() {
-        return new Docket(DocumentationType.OAS_30).pathMapping("/")
+        return new Docket(DocumentationType.OAS_30)
+                .pathMapping("/")
                 // 用来创建该API的基本信息，展示在文档的页面中（自定义展示的信息）
-                /*.enable(enable)*/
+                .enable(true)
                 .apiInfo(apiInfo())
                 // 设置哪些接口暴露给Swagger展示
                 .select()
                 // 扫描所有有注解的api，用这种方式更灵活
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 // 扫描指定包中的swagger注解
-                // .apis(RequestHandlerSelectors.basePackage("com.doctorcloud.product.web.controller"))
-                // 扫描所有 .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.regex("(?!/ApiError.*).*"))
+                 .apis(RequestHandlerSelectors.basePackage("com.shuzhu.controller"))
+                // 扫描所有
+                .apis(RequestHandlerSelectors.any())
+                //.paths(PathSelectors.regex("(?!/ApiError.*).*"))
                 .paths(PathSelectors.any())
                 .build()
                 // 支持的通讯协议集合
@@ -60,10 +57,6 @@ public class SwaggerConfig {
 
     /**
      * 支持的通讯协议集合
-     *
-     * @param type1
-     * @param type2
-     * @return
      */
     private Set<String> newHashSet(String type1, String type2) {
         Set<String> set = new HashSet<>();
@@ -101,24 +94,21 @@ public class SwaggerConfig {
         return securityReferences;
     }
 
-    /**
-     * 添加摘要信息
-     */
+
     private ApiInfo apiInfo() {
-        // 用ApiInfoBuilder进行定制
         return new ApiInfoBuilder()
                 // 设置标题
-                .title("接口文档")
+                .title("侏罗纪小程序接口文档")
                 // 描述
-                .description("描述")
+                .description("版本: 1.0.1")
                 // 作者信息
-                .contact(new Contact("doctorCloud", null, null))
+                .contact(new Contact("数筑云", "", ""))
                 // 版本
-                .version("版本号:V.1")
+                .version("1.0.1")
                 //协议
                 .license("The Apache License")
                 //协议url
-                .licenseUrl("http://www.baidu.com")
+                .licenseUrl("")
                 .build();
     }
 }

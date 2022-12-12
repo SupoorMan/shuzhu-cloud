@@ -1,16 +1,16 @@
 package com.shuzhu.mapper;
 
-import com.shuzhu.entity.AppletUser;
+import com.shuzhu.entity.Orders;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- * 小程序用户表 Mapper 接口
+ * 积分商品订单 Mapper 接口
  * </p>
  *
  * @author Poor
  * @since 2022-12-12
  */
-public interface AppletUserMapper extends BaseMapper<AppletUser> {
+public interface OrdersMapper extends BaseMapper<Orders> {
 
 }

@@ -5,3 +5,16 @@ spring:
     password: 654321
     hikari:
       max-lifetime: 50000
+  redis:
+    host: 47.111.234.21
+    port: 6379
+    password: (5&w^1u%0j$6#i@2a1n;*?
+    timeout: 6000
+    lettuce:
+      pool:
+        max-active: 16
+        max-idle: 8
+        min-idle: 4
+        max-wait: 1000ms
+      shutdown-timeout: 100ms
+    client-type: lettuce
